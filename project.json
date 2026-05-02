@@ -1,0 +1,22 @@
+{
+  "overview": "A campus marketplace where students buy and sell items — from electronics and books to clothes and furniture. Post listings with photos, search by category or price, and contact sellers directly via WhatsApp.",
+  "features": [
+    "Student registration with campus selection",
+    "Post items with up to 5 photos and category tags",
+    "Browse listings with search, filter by category and price, and sort options",
+    "Contact sellers instantly via WhatsApp redirect",
+    "Manage your own listings from your profile",
+    "Responsive mobile-first design for on-the-go browsing"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "marketplace",
+    "campus",
+    "students",
+    "buy-sell",
+    "kenya",
+    "m-pesa",
+    "university"
+  ],
+  "last_updated": "2026-05-02T15:54:59.574Z"
+}

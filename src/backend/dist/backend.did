@@ -1,0 +1,131 @@
+type UserId = principal;
+type UpdateProfileInput = 
+ record {
+   name: text;
+   whatsappPhone: text;
+ };
+type UpdateItemInput = 
+ record {
+   category: Category;
+   description: text;
+   imageRefs: vec text;
+   priceKES: nat;
+   title: text;
+ };
+type Timestamp = int;
+type SortOrder = 
+ variant {
+   newest;
+   priceAsc;
+   priceDesc;
+ };
+type RegistrationMethod = 
+ variant {
+   email: text;
+   phone: text;
+ };
+type RegisterInput = 
+ record {
+   campus: Campus;
+   name: text;
+   registrationMethod: RegistrationMethod;
+   whatsappPhone: text;
+ };
+type ProfileView = 
+ record {
+   campus: Campus;
+   createdAt: Timestamp;
+   id: UserId;
+   name: text;
+   registrationMethod: RegistrationMethod;
+   whatsappPhone: text;
+ };
+type PageResult = 
+ record {
+   items: vec ItemView;
+   limit: nat;
+   offset: nat;
+   total: nat;
+ };
+type ItemView = 
+ record {
+   category: Category;
+   createdAt: Timestamp;
+   description: text;
+   id: ItemId;
+   imageRefs: vec text;
+   priceKES: nat;
+   seller: UserId;
+   sellerWhatsapp: text;
+   status: ItemStatus;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type ItemStatus = 
+ variant {
+   active;
+   sold;
+ };
+type ItemId = nat;
+type CreateItemInput = 
+ record {
+   category: Category;
+   description: text;
+   imageRefs: vec text;
+   priceKES: nat;
+   title: text;
+ };
+type Category = 
+ variant {
+   BedsAndMattresses;
+   Books;
+   Clothes;
+   Electronics;
+   HouseItems;
+ };
+type Campus = text;
+type BrowseFilter = 
+ record {
+   category: opt Category;
+   keyword: opt text;
+   maxPriceKES: opt nat;
+   minPriceKES: opt nat;
+   sortOrder: SortOrder;
+ };
+service : {
+  browseItems: (filter: BrowseFilter, offset: nat, limit: nat) ->
+   (PageResult) query;
+  createItem: (input: CreateItemInput) -> (variant {
+                                             err: text;
+                                             ok: ItemView;
+                                           });
+  deleteItem: (itemId: ItemId) -> (variant {
+                                     notFound;
+                                     ok;
+                                     unauthorized;
+                                   });
+  getItem: (itemId: ItemId) -> (opt ItemView) query;
+  getMyListings: () -> (vec ItemView) query;
+  getMyProfile: () -> (opt ProfileView) query;
+  getProfile: (userId: UserId) -> (opt ProfileView) query;
+  markSold: (itemId: ItemId) -> (variant {
+                                   notFound;
+                                   ok;
+                                   unauthorized;
+                                 });
+  register: (input: RegisterInput) -> (variant {
+                                         err: text;
+                                         ok: ProfileView;
+                                       });
+  updateItem: (itemId: ItemId, input: UpdateItemInput) ->
+   (variant {
+      notFound;
+      ok;
+      unauthorized;
+    });
+  updateProfile: (input: UpdateProfileInput) ->
+   (variant {
+      err: text;
+      ok: ProfileView;
+    });
+}

@@ -1,0 +1,54 @@
+// Version: 1.0.0
+type Campus__1058457213 = Text;
+type Category__613362212 =
+  {#BedsAndMattresses; #Books; #Clothes; #Electronics; #HouseItems};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type ItemId__833640393 = Nat;
+type ItemStatus__102018034 = {#active; #sold};
+type Item__461585918 =
+  {
+    var category : Category__613362212;
+    var createdAt : Timestamp__301639476;
+    var description : Text;
+    id : ItemId__833640393;
+    var imageRefs : [Text];
+    var priceKES : Nat;
+    seller : UserId__158757552;
+    var status : ItemStatus__102018034;
+    var title : Text;
+    var updatedAt : Timestamp__301639476
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Profile__901378260 =
+  {
+    var campus : Campus__1058457213;
+    var createdAt : Timestamp__301639476;
+    id : UserId__158757552;
+    var name : Text;
+    var registrationMethod : RegistrationMethod__847515517;
+    var whatsappPhone : Text
+  };
+type RegistrationMethod__847515517 = {#email : Text; #phone : Text};
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+actor {
+  stable itemCounter : {var next : Nat};
+  stable items :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Item__461585918]];
+      var elementIndex : Nat__490723111
+    };
+  stable profiles :
+    {
+      var root : Node__46230540<UserId__158757552, Profile__901378260>;
+      var size : Nat__490723111
+    }
+};
